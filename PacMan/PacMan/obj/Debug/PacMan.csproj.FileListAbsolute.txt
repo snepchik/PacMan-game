@@ -1,0 +1,11 @@
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.csproj.AssemblyReference.cache
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.Form1.resources
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.Properties.Resources.resources
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.csproj.GenerateResource.cache
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.csproj.CoreCompileInputs.cache
+D:\visual studio\projects\PacMan\PacMan\bin\Debug\PacMan.exe.config
+D:\visual studio\projects\PacMan\PacMan\bin\Debug\PacMan.exe
+D:\visual studio\projects\PacMan\PacMan\bin\Debug\PacMan.pdb
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.exe
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.pdb
+D:\visual studio\projects\PacMan\PacMan\obj\Debug\PacMan.exe.config
