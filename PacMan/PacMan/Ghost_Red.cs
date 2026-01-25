@@ -10,46 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PacMan
-{   
-    public class Ghost_Red
+{
+    public class Ghost_Red : Enemy
     {
-        int timeToMove = 7;
-        int tTMTemp = 7;
-        int tTMWithBoost = 3;
-        int stepsWithBoost = 0;
-        public PictureBox ghost_red { get; private set; }
-        int sizeOfCell = PacMan_Game.sizeOfCell;
-        Random random = new Random();
-        bool right = false;
-        bool left = false;
-        bool up = true;
-        bool down = false;
 
-        public Ghost_Red(Point P, int tTMTemp = 7)
-        {
-            timeToMove = tTMTemp;
-            ghost_red = new PictureBox()
-            {
-                Location = new Point(P.X * sizeOfCell, P.Y * sizeOfCell),
-                Size = new Size(sizeOfCell, sizeOfCell),
-               
+        public Ghost_Red(Point P, int tTMTemp = 7) : base(P, tTMTemp) { }
 
-            };
-            try
-            {
-                ghost_red.Image = Image.FromFile("D:\\visual studio\\projects\\PacMan\\PacMan\\Images\\Ghost_Red.png");
-            }
-            catch
-            {
-                ghost_red.BackColor = Color.Red;
-            }
-            if (Form1.GameField == null)
-            {
-                throw new InvalidOperationException("GameField not initialized. Form must be created first.");
-            }
-            Form1.GameField.Controls.Add(ghost_red);
-        }
-        public void Move()
+        public override void Move()
         {
             if (tTMTemp <= 0)
             {
@@ -59,22 +26,22 @@ namespace PacMan
                     Point p = new Point() { X = ghost_red.Location.X + sizeOfCell, Y = ghost_red.Location.Y };
                     if (Borrder.CheckCollision(new Point { X = p.X / sizeOfCell, Y = p.Y / sizeOfCell }))
                     {
-                        
-                        
-                            WhereNext();
-                        
-                       
+
+
+                        WhereNext();
+
+
                         stepsWithBoost = 4;
                     }
                     else
                     {
-                     
-                            ghost_red.Location = p;
-                        
-                       
-                        
-                            
-                        
+
+                        ghost_red.Location = p;
+
+
+
+
+
                     }
                 }
                 else if (left)
@@ -82,17 +49,17 @@ namespace PacMan
                     Point p = new Point() { X = ghost_red.Location.X - sizeOfCell, Y = ghost_red.Location.Y };
                     if (Borrder.CheckCollision(new Point { X = p.X / sizeOfCell, Y = p.Y / sizeOfCell }))
                     {
-                  
-                            WhereNext();
-                        
+
+                        WhereNext();
+
 
                         stepsWithBoost = 4;
                     }
                     else
                     {
-                      
-                            ghost_red.Location = p;
-                        
+
+                        ghost_red.Location = p;
+
                     }
                 }
                 else if (up)
@@ -100,17 +67,17 @@ namespace PacMan
                     Point p = new Point() { X = ghost_red.Location.X, Y = ghost_red.Location.Y - sizeOfCell };
                     if (Borrder.CheckCollision(new Point { X = p.X / sizeOfCell, Y = p.Y / sizeOfCell }))
                     {
-                       
-                            WhereNext();
-                        
+
+                        WhereNext();
+
 
                         stepsWithBoost = 4;
                     }
                     else
                     {
-                       
-                            ghost_red.Location = p;
-                        
+
+                        ghost_red.Location = p;
+
                     }
                 }
                 else if (down)
@@ -118,21 +85,21 @@ namespace PacMan
                     Point p = new Point() { X = ghost_red.Location.X, Y = ghost_red.Location.Y + sizeOfCell };
                     if (Borrder.CheckCollision(new Point { X = p.X / sizeOfCell, Y = p.Y / sizeOfCell }))
                     {
-                        
-                            WhereNext();
-                        
+
+                        WhereNext();
+
 
                         stepsWithBoost = 4;
                     }
                     else
                     {
-                        
-                            ghost_red.Location = p;
-                        
+
+                        ghost_red.Location = p;
+
                     }
 
                 }
-                if(stepsWithBoost >= 0)
+                if (stepsWithBoost >= 0)
                 {
 
                     stepsWithBoost--;
@@ -142,7 +109,7 @@ namespace PacMan
                 CathPackMan();
             }
             else { tTMTemp--; }
-            
+
             void WhereNext()
             {
 
@@ -191,89 +158,13 @@ namespace PacMan
             }
 
         }
-        void CathPackMan()
+        protected override bool SeekPacMan(Point ghostLoacation)
         {
-            Point ghostLoc = new Point() { X = ghost_red.Location.X / sizeOfCell, Y = ghost_red.Location.Y / sizeOfCell };
-            Point locationPacman = new Point(PacMan.pacman.Location.X / sizeOfCell, PacMan.pacman.Location.Y / sizeOfCell);
-            if (ghostLoc.Equals(locationPacman)){
-                Console.WriteLine("Конец!");
-                PacMan_Game.gameOver = true;
-            }
+            return base.SeekPacMan(ghostLoacation);
         }
-        bool SeekPacMan(Point ghostLoacation)
+        protected override void CathPackMan()
         {
-            Point locationPacman = new Point(PacMan.pacman.Location.X / sizeOfCell, PacMan.pacman.Location.Y / sizeOfCell);
-            Point locationGhost = new Point(ghostLoacation.X / sizeOfCell, ghostLoacation.Y / sizeOfCell);
-            //проверка по оси Y вверх
-            for(int i = locationGhost.Y-1;i > 0;i--)
-            {
-                Point search = new Point { X = locationGhost.X, Y = i };
-                if (search.Equals(locationPacman))
-                {
-                    up = true;
-                    right = false;
-                    left = false;
-                    down = false;
-                    return true;
-                }
-                else if (Borrder.CheckCollision(search))
-                {
-                    break;
-                }
-            }
-            //проверка по оси Y вниз
-            for (int i = locationGhost.Y +1; i < Borrder.border.GetLength(0) - 1; i++)
-            {
-                Point search = new Point { X = locationGhost.X, Y = i };
-                if (search.Equals(locationPacman))
-                {
-                    down = true;
-                    right = false;
-                    left = false;
-                    up = false;
-                    return true;
-                }
-                else if (Borrder.CheckCollision(search))
-                {
-                    break;
-                }
-            }
-            //проверка по оси X вправо
-            for (int i = locationGhost.X + 1; i < Borrder.border.GetLength(1) - 1; i++)
-            {
-                Point search = new Point { X = i, Y = locationGhost.Y };
-                if (search.Equals(locationPacman))
-                {
-                    right = true;
-                    down = false;
-                    left = false;
-                    up = false;
-                    return true;
-                }
-                else if (Borrder.CheckCollision(search))
-                {
-                    break;
-                }
-            }
-            // по оси X влево
-            for (int i = locationGhost.X -1 ; i > 0; i--)
-            {
-                Point search = new Point { X = i, Y = locationGhost.Y };
-                if (search.Equals(locationPacman))
-                {
-                    left = true;
-                    right = false;
-                    up = false;
-                    down = false;
-                    return true;
-                }
-                else if (Borrder.CheckCollision(search))
-                {
-                    break;
-                }
-            }
-            return false;
-
+            base.CathPackMan();
         }
     }
 }

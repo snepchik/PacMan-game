@@ -23,7 +23,7 @@ namespace PacMan
         {
 
             Timer gameTimer = new Timer();
-            gameTimer.Interval = 40; 
+            gameTimer.Interval = 37; 
             gameTimer.Tick += (s, e) =>
             {
                 pacman.Move();
@@ -50,7 +50,7 @@ namespace PacMan
                     }
                 if(pacman.Score >= 11000)
                 {
-                    
+                    gameTimer.Stop();
                     Form1.Win1.Visible = true;
                 }
             };
